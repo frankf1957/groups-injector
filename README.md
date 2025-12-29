@@ -163,7 +163,7 @@ header_property = username
 auto_sign_up = true
 headers = Groups:X-Forwarded-Groups Email:X-Forwarded-Email
 enable_role_attribute_mapping = true
-role_attribute_path = contains(Groups[*], 'ocp-cluster-admin') && 'Admin' || 'Editor'
+role_attribute_path = contains(Groups[*], 'ocp-cluster-admins') && 'Admin' || 'Editor'
 ```
 
 ## Logging
