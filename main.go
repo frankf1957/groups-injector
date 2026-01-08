@@ -57,10 +57,15 @@ func main() {
 			if err != nil {
 				log.Printf("Error fetching user groups: %v", err)
 			} else if len(groups) > 0 {
-				// Inject groups as comma-separated header
-				groupsHeader := strings.Join(groups, ",")
-				r.Header.Set("X-Forwarded-Groups", groupsHeader)
-				log.Printf("Injected groups: %s", groupsHeader)
+				// Convert the groups slice to a JSON array
+				jsonGroups, err := json.Marshal(groups)
+				if err != nil {
+					log.Printf("Error marshaling groups to JSON: %v", err)
+				} else {
+					// Inject groups as a JSON document string
+					r.Header.Set("X-Forwarded-Groups", string(jsonGroups))
+					log.Printf("Injected groups (JSON): %s", string(jsonGroups))
+				}
 			}
 		}
 
